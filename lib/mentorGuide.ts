@@ -21,6 +21,13 @@ export type MentorGuide = {
   title: string;
   /** The model answer, as a learner would enter it. */
   answer: string;
+  /**
+   * A learner-facing worked example, shown by <ExampleAnswer> instead of `answer` when the field's own answer is the case's
+   * calculated result or one of a small fixed set of correct picks. Uses the same method as `answer`, but different, generic
+   * names and different numbers, so it teaches the method without handing over this case's result. Leave unset when `answer`
+   * is already safe to show as-is (an open reflection or hypothesis, where many answers defend).
+   */
+  example?: string;
   /** For a calculation: each step with its numbers, in order. */
   steps?: WorkedStep[];
   /** Why the answer is what it is, in one or two sentences a mentor can say out loud. */
@@ -91,6 +98,8 @@ export function roleGuide(): MentorGuide {
   return {
     title: "1.2 · What trust and risk did",
     answer: KEY_L1.role,
+    example:
+      "Company A is €7,000 cheaper on the price list than Company B (€54,000 against €61,000), but the buyer expects a 9% chance of a bad outcome with Company A against only 3% with Company B. Weighted twice as heavily as a gain, that risk adds €21,600 to Company A and only €7,200 to Company B, so once the risk is included Company B feels about €7,400 cheaper (€68,200 against €75,600) despite being dearer on paper. Run the same steps on your own F1, F2 and F3 to say which of the two real providers actually feels cheaper, and by how much.",
     why: "The sentence must say that trust lowered the chance the buyer expects (4% against 12%), that loss aversion multiplied it, and that this outweighed the price. It should quote a figure from the calculation.",
     lookFor: [
       "At least one figure from the calculation (116,000, 108,000, 8,000, 16,000, 36,000 or 12,000).",
@@ -137,6 +146,8 @@ export function behaviourGuide(i: number): MentorGuide {
   return {
     title: `2.2 · Pattern ${i + 1}: ${b.label}`,
     answer: `${p.behaviour} (Strength: ${STRENGTH_LABEL[p.strength]})`,
+    example:
+      "For example: “When a proposal is still under review, buyers ask to see a rival's proposal side by side and then go quiet for weeks, because they cannot tell which option is worth the extra cost.” That names what buyers do and the mechanism behind it in one sentence. With a tally of 2 notes and 1 dropout (3 points), this pattern would be rated Mid. Write your own pattern the same way, from your own barrier and your own tally — not this barrier and not these counts.",
     steps: [
       { label: "Notes tagged with the barrier", calc: `${BARRIERS[p.barrier].short}`, result: String(TRUTH_COUNTS[p.barrier]) },
       { label: "Of those, dropped out", calc: "from the twelve notes", result: String(TRUTH_DROPPED[p.barrier]) },
@@ -182,6 +193,8 @@ export function whyGuide(): MentorGuide {
   return {
     title: "2.3 · Why the first priority goes first",
     answer: KEY_L1.why,
+    example:
+      "Say your own three give Measure A a score of 18, Measure B 18 and Measure C 9, with 4, 7 and 2 weeks to a first effect. A and B tie on score, so the order between them is decided by where the evidence is strongest or which one acts fastest — here Measure A goes first because it works in 4 weeks against Measure B's 7. Then say what the three cost against your own budget line, and name the one thing a fourth option would have covered that you now leave uncovered. Use your own three measures, your own scores and your own budget figure to write the same structure.",
     steps: [
       { label: "Model measures and their scores", calc: MODEL_MEASURES.map((id) => `${MEASURE_BY_ID[id].name} ${modelScore(id)}`).join("; "), result: "18 each" },
       { label: "Cost of the three", calc: MODEL_MEASURES.map((id) => n(MEASURE_BY_ID[id].cost)).join(" + "), result: euro(MODEL_COST) },
@@ -232,6 +245,8 @@ export function greatestGuide(): MentorGuide {
   return {
     title: "3.3 · The greatest psychological lever",
     answer: `${LEVER_BY_ID[KEY_R2.greatest].name}. ${KEY_R2.greatestWhy}`,
+    example:
+      "Say your Route 1 evidence shows Barrier X stopped the most deals and cancelled two of them. If Lever B is the one written into the contract as a standing rule and applies to every deal, name Lever B as the greatest lever and say why: it acts on Barrier X, and because it is a rule rather than one person's habit, it still works when the seller changes. Name your own barrier and your own three levers — which one is a process step or a rule, and which barrier in your own tally does it answer?",
     why: "The greatest lever is the one that acts on the factor stopping the most deals in the evidence, with the highest depth and durability.",
     lookFor: ["A factor or barrier from Route 1 named.", "Why this lever is deep and lasting, not only fast."],
     pitfalls: ["Naming the cheapest or the fastest lever."],
