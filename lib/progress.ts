@@ -1,4 +1,5 @@
 import { MATERIALS } from "@/data/materialIndex";
+import type { MaterialId } from "@/data/materialIndex";
 import { HYP_MIN, hasBecause } from "@/data/hypotheses";
 import { NOTE_IDS } from "@/data/exitNotes";
 import { REASON_IDS } from "@/data/debrief";
@@ -66,15 +67,23 @@ export function taskBlocks(p: Persisted): Record<TaskBlockId, boolean> {
   };
 }
 
+/**
+ * Route 2 marks three of its six task blocks Optional (3.1, 3.2, 3.4): for whoever has time, never required,
+ * never counted toward the "Dossier" ring or listed as missing (`lib/missing.ts`). Its material card B4 is used
+ * only by the Optional Block 3.4, so it is Optional too and stays out of the ring's total the same way; B1, B2,
+ * B3 and B5 are each drawn on by a Core block (3.3 or 3.5 or 3.6) and so stay counted, required and always shown.
+ */
 const BLOCKS_OF: Record<RouteNo, TaskBlockId[]> = {
   1: ["b11", "b12", "b13", "b14", "b21", "b22", "b23"],
-  2: ["b31", "b32", "b33", "b34", "b35", "b36"],
+  2: ["b33", "b35", "b36"],
 };
+const R2_OPTIONAL_MATERIAL: MaterialId[] = ["B4"];
 
-/** Dossier progress for one route: its cards marked read + its task blocks completed. */
+/** Dossier progress for one route: its cards marked read + its task blocks completed. Route 2's Optional card and blocks are left out of the total (they are never required), so the ring reflects what a complete export needs. */
 export function dossierProgress(p: Persisted, route: RouteNo): { done: number; total: number } {
   const block = route === 1 ? "A" : "B";
-  const cards = MATERIALS.filter((m) => m.block === block);
+  const optionalMaterial: MaterialId[] = route === 2 ? R2_OPTIONAL_MATERIAL : [];
+  const cards = MATERIALS.filter((m) => m.block === block && !optionalMaterial.includes(m.id));
   const read = cards.filter((m) => p.ui.sectionsRead[m.id]).length;
   const tb = taskBlocks(p);
   const done = BLOCKS_OF[route].filter((b) => tb[b]).length;

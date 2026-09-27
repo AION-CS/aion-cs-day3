@@ -64,7 +64,7 @@ export function Block31() {
       id="block-3-1"
       title="Block 3.1 · Define the three central influencing factors"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.1"]}
+      tier={{ level: "optional", minutes: BLOCK_MINUTES["3.1"] }}
       findIt="Route 2 → Task 2 → “Where Route 1 left off” in the case above, and the six factors below. Answer by choosing three and defining each."
     >
       <MaterialRefs refs={["B1"]} />
@@ -136,7 +136,7 @@ export function Block32() {
       id="block-3-2"
       title="Block 3.2 · Build the control model: phase by phase"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.2"]}
+      tier={{ level: "optional", minutes: BLOCK_MINUTES["3.2"] }}
       findIt="Route 2 → Task 2 → the three phases below. For each, answer the buyer's question, the dominant factor, the signal and what your system does."
     >
       <MaterialRefs refs={["B1", "B3"]} />
@@ -220,7 +220,7 @@ export function Block33() {
       id="block-3-3"
       title="Block 3.3 · Three strategic levers, rated on four tests"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.3"]}
+      tier={{ level: "core", minutes: BLOCK_MINUTES["3.3"] }}
       findIt="Route 2 → Task 2 → the eight levers below, each with what it depends on and how its cost behaves. Answer by choosing three, rating each on the four tests and naming the greatest lever."
     >
       <MaterialRefs refs={["B1", "B2"]} />
@@ -344,7 +344,7 @@ export function Block34() {
       id="block-3-4"
       title="Block 3.4 · Risk analysis: what if we misjudge the customer?"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.4"]}
+      tier={{ level: "optional", minutes: BLOCK_MINUTES["3.4"] }}
       findIt="Route 2 → Task 2 → the eight risks below. Answer by choosing three that are misjudgments of customer psychology, rating them, choosing the early signal and writing the response."
     >
       <MaterialRefs refs={["B4"]} />
@@ -483,7 +483,7 @@ export function Block35() {
       id="block-3-5"
       title="Block 3.5 · The measures architecture: fund, sequence, own"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.5"]}
+      tier={{ level: "core", minutes: BLOCK_MINUTES["3.5"] }}
       findIt={`Route 2 → Task 2 → the items below: your three levers from Block 3.3 and the two enabling items. The budget is ${euro(R2_BUDGET)} over ${R2_MONTHS} months. Answer in the item cards.`}
     >
       <MaterialRefs refs={["B5"]} />
@@ -653,7 +653,7 @@ export function Block36() {
       id="block-3-6"
       title="Block 3.6 · Decide before you know how customers will react"
       kind="OBJECTIVE + JUDGED"
-      minutes={BLOCK_MINUTES["3.6"]}
+      tier={{ level: "core", minutes: BLOCK_MINUTES["3.6"] }}
       findIt="Route 2 → Task 2 → your own answers in Blocks 3.1 to 3.5, the baselines below, and the regret table in Materi B3. Answer in the fields below."
     >
       <MaterialRefs refs={["B3"]} />

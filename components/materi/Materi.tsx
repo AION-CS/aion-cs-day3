@@ -1,9 +1,10 @@
 "use client";
 
 import { CARDS_A } from "@/components/materi/CardsA";
-import { CARDS_B } from "@/components/materi/CardsB";
+import { CardB1, CardB2, CardB3, CardB4, CardB5 } from "@/components/materi/CardsB";
+import { OptionalReveal } from "@/components/ui/OptionalReveal";
 import { ReferencesAccordion } from "@/components/ui/ReferencesAccordion";
-import { SECTIONS } from "@/data/materialIndex";
+import { MATERIAL_BY_ID, materialAnchorId, SECTIONS } from "@/data/materialIndex";
 import type { RefKey } from "@/data/references";
 
 /** The material block of a route: one continuous run of study cards, then the block's own reference list. */
@@ -40,14 +41,19 @@ export function MateriA() {
 
 export function MateriB() {
   const s = SECTIONS[2][0];
+  const b4 = MATERIAL_BY_ID.B4;
   return (
     <Block id={s.id} title={`Materi B · ${s.minutes} minutes, facilitator-led`} intro="Managing decisions as a system: levers, decisions under uncertainty, the risk of being wrong, and the architecture that carries it">
       <p className="max-w-prose text-body text-ash">
-        Five cards for Level 3. You stop reading one buyer and start designing conditions for every buyer. Each card ends in rules the task uses; each diagram uses Elbtal Systems, another vendor.
+        Five cards for Level 3. You stop reading one buyer and start designing conditions for every buyer. Each card ends in rules the task uses; each diagram uses Elbtal Systems, another vendor. B4 is Optional in this route: it teaches Block 3.4, which is Optional too, so it starts collapsed.
       </p>
-      {CARDS_B.map((C, i) => (
-        <C key={i} />
-      ))}
+      <CardB1 />
+      <CardB2 />
+      <CardB3 />
+      <OptionalReveal id={materialAnchorId("B4")} minutes={b4.minutes} label={b4.title}>
+        <CardB4 />
+      </OptionalReveal>
+      <CardB5 />
       <ReferencesAccordion block="B" keys={REFS_B} note="Check every source before you teach from it: page numbers and editions differ between printings." />
     </Block>
   );

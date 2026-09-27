@@ -3,7 +3,7 @@ import { EXIT_NOTES } from "@/data/exitNotes";
 import { HYP_MIN, hasBecause } from "@/data/hypotheses";
 import { BARRIERS } from "@/data/barriers";
 import { CHOOSE, MEASURE_BY_ID } from "@/data/measures";
-import { FACTORS, LEVER_BY_ID, LEVER_CHOOSE, MODEL_PHASES, R2_BUDGET, RISK_BY_ID, RISK_CHOOSE } from "@/data/route2";
+import { LEVER_BY_ID, LEVER_CHOOSE, R2_BUDGET } from "@/data/route2";
 import { archIds, archOver, citesFeltFigure, funded, hasNumber } from "@/lib/checks";
 import { MIN_LINE, MIN_SENTENCE } from "@/lib/progress";
 import { parseAmount } from "@/lib/parseAmount";
@@ -108,30 +108,14 @@ export function r2Missing(p: Persisted): MissingEntry[] {
   const out = participantMissing(p);
   const { r2 } = p;
   const e = (id: string, label: string) => out.push({ id, label });
-  if (r2.factors.length !== 3) e(IDS.factorPick, `Block 3.1: choose exactly 3 central factors (you have ${r2.factors.length}).`);
-  for (const f of r2.factors) if ((r2.factorText[f] ?? "").trim().length < MIN_LINE) e(IDS.factor(f), `Block 3.1: say how “${FACTORS[f].name}” shows up in a SecureIT deal and how you would notice it.`);
-  for (const ph of MODEL_PHASES) {
-    const m = r2.model[ph.id];
-    if (!m.question) e(IDS.model(ph.id), `Block 3.2: ${ph.name} has no buyer's question chosen.`);
-    if (!m.factor) e(IDS.model(ph.id), `Block 3.2: ${ph.name} has no dominant factor chosen.`);
-    if (!m.signal) e(IDS.model(ph.id), `Block 3.2: ${ph.name} has no signal chosen.`);
-    if (m.move.trim().length < MIN_LINE) e(IDS.model(ph.id), `Block 3.2: say what your system does in ${ph.name} (at least ${MIN_LINE} characters).`);
-  }
+  // Blocks 3.1, 3.2 and 3.4 are Optional (CLAUDE.md #29's pattern): for whoever has time, never listed as missing,
+  // whatever state they are in. Blocks 3.3, 3.5 and 3.6 are Core and are checked below as before.
   if (r2.levers.length !== LEVER_CHOOSE) e(IDS.leverPick, `Block 3.3: choose exactly ${LEVER_CHOOSE} levers (you have ${r2.levers.length}).`);
   for (const id of r2.levers) {
     if (!(["reach", "depth", "durability", "scale"] as const).every((c) => !!r2.rate[`${id}.${c}`])) e(IDS.lever(id), `Block 3.3: “${LEVER_BY_ID[id].name}” is not rated on all four tests.`);
   }
   if (!r2.greatest) e(IDS.greatest, "Block 3.3: name the lever you see as the greatest psychological lever.");
   if (r2.greatestWhy.trim().length < 40) e(IDS.greatestWhy, "Block 3.3: say why it is the greatest lever (at least 40 characters).");
-  if (r2.risks.length !== RISK_CHOOSE) e(IDS.riskPick, `Block 3.4: choose exactly ${RISK_CHOOSE} risks (you have ${r2.risks.length}).`);
-  for (const id of r2.risks) {
-    const name = RISK_BY_ID[id].name;
-    if (!r2.riskLik[id] || !r2.riskImp[id]) e(IDS.risk(id), `Block 3.4: “${name}” has no likelihood or impact.`);
-    if (!r2.riskSignal[id]) e(IDS.risk(id), `Block 3.4: “${name}” has no early-warning signal chosen.`);
-    const t = (r2.riskResponse[id] ?? "").trim();
-    if (t.length < MIN_LINE) e(IDS.risk(id), `Block 3.4: “${name}” needs a response (at least ${MIN_LINE} characters).`);
-    else if (!hasNumber(t)) e(IDS.risk(id), `Block 3.4: the response to “${name}” names no number. Say when you act.`);
-  }
   const f = funded(r2);
   if (f.length === 0) e(IDS.archTotal, "Block 3.5: fund at least one item.");
   if (archOver(r2) > 0) e(IDS.archTotal, `Block 3.5: the funded items are ${euro(archOver(r2))} over the ${euro(R2_BUDGET)} budget.`);

@@ -7,6 +7,7 @@ import type { NavItem } from "@/data/pageNav";
 import { scrollToAndFlash } from "@/lib/flash";
 import { taskBlocks } from "@/lib/progress";
 import type { RouteNo } from "@/lib/routes";
+import { openOptionalBlock } from "@/store/useOptionalOpen";
 import { useHydrated } from "@/store/useStore";
 import { usePersisted } from "@/store/usePersisted";
 
@@ -69,6 +70,8 @@ export function PageNav({ route }: { route: RouteNo }) {
   const go = (id: string) => {
     setOpen(false);
     setActive(id);
+    // An Optional card or block is collapsed until asked for: open it first, then land on it.
+    openOptionalBlock(id);
     window.setTimeout(() => scrollToAndFlash(id, "ref", "start"), 60);
   };
   const activeItem = items.find((i) => i.id === active);

@@ -19,8 +19,13 @@ export type NavItem = {
 };
 export type NavGroup = { label: string; items: NavItem[] };
 
-const cards = (block: "A" | "B"): NavItem[] =>
-  MATERIALS.filter((m) => m.block === block).map((m) => ({ id: materialAnchorId(m.id), short: m.id, title: m.title, done: { card: m.id } }));
+const cards = (block: "A" | "B", optionalIds: string[] = []): NavItem[] =>
+  MATERIALS.filter((m) => m.block === block).map((m) => ({
+    id: materialAnchorId(m.id),
+    short: m.id,
+    title: optionalIds.includes(m.id) ? `${m.title} (optional)` : m.title,
+    done: { card: m.id },
+  }));
 
 const blk = (n: string, title: string, block: TaskBlockId): NavItem => ({ id: `block-${n.replace(".", "-")}`, short: n, title, done: { block } });
 
@@ -43,15 +48,15 @@ export const PAGE_NAV: Record<RouteNo, NavGroup[]> = {
     },
   ],
   2: [
-    { label: "Materi B", items: cards("B") },
+    { label: "Materi B", items: cards("B", ["B4"]) },
     {
       label: "Task 2",
       items: [
         { id: "task-2", short: "Case", title: "The situation and the budget" },
-        blk("3.1", "Three central influencing factors", "b31"),
-        blk("3.2", "The control model", "b32"),
+        blk("3.1", "Three central influencing factors (optional)", "b31"),
+        blk("3.2", "The control model (optional)", "b32"),
         blk("3.3", "Three strategic levers", "b33"),
-        blk("3.4", "Risk of misjudging the customer", "b34"),
+        blk("3.4", "Risk of misjudging the customer (optional)", "b34"),
         blk("3.5", "The measures architecture", "b35"),
         blk("3.6", "The decision", "b36"),
         { id: "export-l3", short: "Export", title: "Export the Decision Memo" },

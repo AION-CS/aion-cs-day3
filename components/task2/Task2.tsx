@@ -11,7 +11,7 @@ import { Gloss } from "@/lib/glossify";
 import { euro } from "@/lib/lang";
 import { memoBody } from "@/lib/exportDoc";
 import { r2Missing } from "@/lib/missing";
-import { TASK2_MINUTES } from "@/lib/routes";
+import { TASK2_CORE_MINUTES, TASK2_MINUTES } from "@/lib/routes";
 import { exportName } from "@/lib/slug";
 import { useJumpTo } from "@/lib/useJumpTo";
 import { usePersisted } from "@/store/usePersisted";
@@ -50,17 +50,20 @@ function CaseBrief() {
           </ul>
         </div>
         <div className="rounded-lg border border-line bg-canvas p-3 text-caption md:col-span-2">
-          <p className="smallcaps">What you build · about {TASK2_MINUTES} min</p>
+          <p className="smallcaps">What you build · Core about {TASK2_CORE_MINUTES} min, all of it about {TASK2_MINUTES} min</p>
           <ol className="mt-1 grid list-decimal gap-x-6 pl-4 text-ink sm:grid-cols-2">
-            <li>The central influencing factors</li>
-            <li>A model of how buyers decide</li>
             <li>Three strategic levers</li>
-            <li>The risk of misjudging customers</li>
             <li>The measures architecture</li>
             <li>A decision before the reactions are known</li>
+            <li className="text-ash">The central influencing factors (optional)</li>
+            <li className="text-ash">A model of how buyers decide (optional)</li>
+            <li className="text-ash">The risk of misjudging customers (optional)</li>
           </ol>
         </div>
       </div>
+      <p className="text-caption text-ash">
+        Three blocks (naming the factors, modelling each phase, sizing the misjudgment risk) are marked <strong>Optional</strong> below: they start collapsed to one line, for whoever has time, and are never listed as missing from the memo. Choosing the levers, funding them and deciding are <strong>Core</strong> — that is what the memo needs.
+      </p>
       <div role="note" className="rounded-lg border border-gold bg-accentSoft p-3 text-caption text-ink" id="task1-quote">
         <p className="smallcaps text-accent">Where Route 1 left off · your own answers</p>
         {has ? (

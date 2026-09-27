@@ -34,6 +34,8 @@ export const BLOCK_MINUTES = {
 const sum = (keys: (keyof typeof BLOCK_MINUTES)[]) => keys.reduce((s, k) => s + BLOCK_MINUTES[k], 0);
 export const TASK1_MINUTES = sum(["1.1", "1.2", "1.3", "1.4", "2.1", "2.2", "2.3"]);
 export const TASK2_MINUTES = sum(["3.1", "3.2", "3.3", "3.4", "3.5", "3.6"]);
+/** Blocks 3.1, 3.2 and 3.4 are Optional (for whoever has time, never required); this is the minutes of the three Core blocks alone. */
+export const TASK2_CORE_MINUTES = sum(["3.3", "3.5", "3.6"]);
 
 export type RouteInfo = {
   n: RouteNo;
@@ -68,10 +70,11 @@ export const ROUTES: RouteInfo[] = [
     title: "Route 2 · Management decision",
     level: "Level 3 · Management decision",
     blurb:
-      "You are now the Chief Sales Officer. Customers decide slowly, the market is uncertain, competition is strong and the budget is limited. You build a model for managing purchase decisions, choose three strategic levers, size the risk of misjudging customers, design the measures and decide, in writing, before the customers' reactions are known. Material first, then a Decision Memo that assembles itself beside your answers.",
+      "You are now the Chief Sales Officer. Customers decide slowly, the market is uncertain, competition is strong and the budget is limited. You choose three strategic levers, fund and sequence them, and decide, in writing, before the customers' reactions are known — the backbone of the memo. Naming the influencing factors, modelling each phase and sizing the risk of misjudging customers are Optional, for whoever has time. Material first, then a Decision Memo that assembles itself beside your answers.",
     plan: [
-      { label: "Materi B · five cards, Level 3", minutes: 60 },
-      { label: "Task 2 · Decision Memo", minutes: TASK2_MINUTES },
+      { label: "Materi B · five cards, Level 3 (one Optional)", minutes: 60 },
+      { label: "Task 2 · Decision Memo, Core", minutes: TASK2_CORE_MINUTES },
+      { label: "Task 2 · Optional blocks, for whoever has time", minutes: TASK2_MINUTES - TASK2_CORE_MINUTES },
     ],
     built: true,
   },
