@@ -5,6 +5,7 @@ import { Toggles } from "@/components/materi/kit";
 import { AnswerBlock } from "@/components/ui/AnswerBlock";
 import { AnswerKey } from "@/components/ui/AnswerKey";
 import { BudgetBar } from "@/components/ui/BudgetBar";
+import { ExampleAnswer } from "@/components/ui/ExampleAnswer";
 import { Field } from "@/components/ui/Field";
 import { CheckBar, OptionList, Reading, ScorePick, TextBox } from "@/components/ui/Inputs";
 import { MaterialRefs } from "@/components/ui/MaterialRefs";
@@ -59,6 +60,7 @@ export function Block21() {
         domId={IDS.note}
         clues={Object.fromEntries(EXIT_NOTES.map((n) => [n.id, n.clue]))}
         reasons={Object.fromEntries(EXIT_NOTES.map((n) => [n.id, n.why]))}
+        keyPhrases={Object.fromEntries(EXIT_NOTES.map((n) => [n.id, n.key]))}
         result={l1.tagResult}
         checks={l1.tagChecks}
         onCheck={() => patch((s) => ({ checks: s.checks + 1, tagChecks: s.tagChecks + 1, tagResult: tagHolds(s.tags) }))}
@@ -218,6 +220,7 @@ export function Block22() {
                 <Toggles<Strength> label={`Strength of pattern ${i + 1}`} value={r.strength} onChange={(v) => setRow(i, { strength: v })} options={STRENGTH_OPTS} />
               </div>
             </Field>
+            <ExampleAnswer id={`pattern-${i}-example`} guide={behaviourGuide(i)} />
             {mentor && <MentorGuide guide={behaviourGuide(i)} />}
           </div>
         ))}
@@ -266,6 +269,7 @@ export function Block22() {
           min={20}
           rows={2}
         />
+        <ExampleAnswer id="info-text-example" guide={infoTextGuide()} />
         {mentor && <MentorGuide guide={infoTextGuide()} />}
       </div>
     </AnswerBlock>
@@ -508,6 +512,7 @@ export function Block23() {
               ]}
             />
           </TextBox>
+          <ExampleAnswer id="why-example" guide={whyGuide()} />
           {mentor && <MentorGuide guide={whyGuide()} />}
         </div>
       )}

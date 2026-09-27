@@ -17,6 +17,8 @@ export type Reason = {
   id: ReasonId;
   /** What the buyer said, as printed. */
   quote: string;
+  /** The decisive phrase inside the quote, an exact substring, used by "Highlight the key words". Never says which tag it points to. */
+  key: string;
   truth: ReasonTag;
   /** One question that teaches how to test the item. Shown for every row at once, never only the wrong ones. */
   clue: string;
@@ -30,6 +32,7 @@ export const REASONS: Reason[] = [
   {
     id: "sla",
     quote: "Sentinel put a 4-hour response time into the contract. Your offer said “next business day”.",
+    key: "put a 4-hour response time into the contract",
     truth: "rational",
     clue: "Could a third party check this against the contract text or the price list?",
     why: "A response time is a property of the offer and it is written in a document. It can be compared line by line.",
@@ -41,6 +44,7 @@ export const REASONS: Reason[] = [
   {
     id: "cert",
     quote: "Sentinel already holds the ISO/IEC 27001 certificate. Yours was “in preparation” when we decided.",
+    key: "already holds the ISO/IEC 27001 certificate",
     truth: "rational",
     clue: "Is there a certificate, a date or a document the buyer could point to?",
     why: "A certification is either held or not, and the certificate can be shown. That is checkable, so it is a rational reason.",
@@ -52,6 +56,7 @@ export const REASONS: Reason[] = [
   {
     id: "fixed",
     quote: "Sentinel priced the onboarding at a fixed fee. Yours was time and material, so we could not cap our cost.",
+    key: "priced the onboarding at a fixed fee",
     truth: "rational",
     clue: "Is this a term of the price sheet that can be compared with the other offer?",
     why: "A fixed fee against an open-ended one is a term of the offer. It changes the budget in a way the buyer can compute.",
@@ -63,6 +68,7 @@ export const REASONS: Reason[] = [
   {
     id: "blame",
     quote: "When I imagined explaining a breach to our managing director, “we chose Sentinel” was a sentence I could survive. “We chose SecureIT” was not.",
+    key: "imagined explaining a breach to our managing director",
     truth: "emotional",
     clue: "Is this about what the buyer expects to feel, or about something in the offer?",
     why: "It is about anticipated blame and regret. Nothing in the offer changed between the two sentences; only how the buyer expects to be judged.",
@@ -74,6 +80,7 @@ export const REASONS: Reason[] = [
   {
     id: "calm",
     quote: "After the first meeting with Sentinel I simply felt calmer. Your team was good, but I could not say why I was not sure.",
+    key: "I simply felt calmer",
     truth: "emotional",
     clue: "Could anyone verify this from a document, or is it a report of a feeling?",
     why: "“I felt calmer” and “I could not say why” are the buyer's own report of a feeling, with no fact attached.",
@@ -85,6 +92,7 @@ export const REASONS: Reason[] = [
   {
     id: "unknown",
     quote: "I had never heard of SecureIT before your first email. I did not know what we would be getting.",
+    key: "never heard of SecureIT",
     truth: "emotional",
     clue: "Is this about something in the offer, or about how unfamiliar the vendor felt?",
     why: "Unfamiliarity produces uncertainty, and uncertainty is felt before it is reasoned. The sentence reports the feeling of not knowing.",
@@ -96,6 +104,7 @@ export const REASONS: Reason[] = [
   {
     id: "peers",
     quote: "Two firms in our industry association use Sentinel. That counts for something.",
+    key: "Two firms in our industry association use Sentinel",
     truth: "both",
     clue: "It sounds like a fact. Does it tell you anything about this buyer's own delivery, or does it mainly reassure?",
     why: "It can be checked (call the two firms), but it says nothing about what Sentinel would deliver to Rheinwerk. Its job is reassurance from what others did: social proof.",
@@ -107,6 +116,7 @@ export const REASONS: Reason[] = [
   {
     id: "safe",
     quote: "Sentinel is the safe choice. Nobody has ever been criticised for picking them.",
+    key: "Nobody has ever been criticised for picking them",
     truth: "both",
     clue: "It is stated as a fact about a reputation. What work is it really doing for the buyer?",
     why: "A reputation is stated like a fact, but the sentence is about not being blamed. It is a feeling of safety given the form of a reason.",

@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { AnswerBlock } from "@/components/ui/AnswerBlock";
 import { AnswerKey } from "@/components/ui/AnswerKey";
 import { BudgetBar } from "@/components/ui/BudgetBar";
+import { ExampleAnswer } from "@/components/ui/ExampleAnswer";
 import { CheckBar, OptionList, Reading, ScorePick, TextBox } from "@/components/ui/Inputs";
 import { MaterialRefs } from "@/components/ui/MaterialRefs";
 import { MentorGuide } from "@/components/ui/MentorGuide";
@@ -109,6 +110,7 @@ export function Block31() {
             min={MIN_LINE}
             rows={3}
           />
+          <ExampleAnswer id={`factor-${f}-example`} guide={factorTextGuide(f)} />
           {mentor && <MentorGuide guide={factorTextGuide(f)} />}
         </div>
       ))}
@@ -181,6 +183,7 @@ export function Block32() {
               min={MIN_LINE}
               rows={2}
             />
+            <ExampleAnswer id={`model-${ph.id}-move-example`} guide={moveGuide(ph.id)} />
             {mentor && <MentorGuide guide={moveGuide(ph.id)} />}
           </div>
         );
@@ -316,6 +319,7 @@ export function Block33() {
             min={40}
             rows={3}
           />
+          <ExampleAnswer id="greatest-why-example" guide={greatestGuide()} />
           {mentor && <MentorGuide guide={greatestGuide()} />}
         </div>
       )}
@@ -403,6 +407,7 @@ export function Block34() {
               clue="Add the number that says when you act: how many deals, how many weeks, what percentage."
               clueShown
             />
+            <ExampleAnswer id={`risk-${id}-response-example`} guide={riskResponseGuide(id)} />
             {mentor && <MentorGuide guide={riskResponseGuide(id)} />}
           </div>
         );
@@ -574,6 +579,7 @@ export function Block35() {
                   min={20}
                   rows={2}
                 />
+                <ExampleAnswer id={`arch-${id}-trigger-example`} guide={triggerGuide(id)} />
                 {mentor && <MentorGuide guide={triggerGuide(id)} />}
               </>
             )}
@@ -616,6 +622,7 @@ export function Block35() {
             min={15}
             rows={2}
           />
+          <ExampleAnswer id="postponed-example" guide={postponedGuide()} />
           {mentor && <MentorGuide guide={postponedGuide()} />}
         </div>
       )}
@@ -675,6 +682,7 @@ export function Block36() {
               min={MIN_LINE}
               rows={2}
             />
+            <ExampleAnswer id={`assumption-${i}-example`} guide={assumptionGuide(i)} />
             {mentor && <MentorGuide guide={assumptionGuide(i)} />}
           </div>
         ))}
@@ -760,6 +768,7 @@ export function Block36() {
         >
           <WritingHelp id="challenge-help" steps={["Go back to your tripwire and your signals before spending more.", "Say what the numbers still support, and keep it.", "Change one lever, not the whole plan, and say how you will find out why the customers reacted as they did."]} />
         </TextBox>
+        <ExampleAnswer id="challenge-example" guide={challengeGuide()} />
         {mentor && <MentorGuide guide={challengeGuide()} />}
       </div>
 

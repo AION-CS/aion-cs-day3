@@ -20,6 +20,8 @@ export type ExitNote = {
   outcome: "dropped" | "delayed";
   /** What happened and what the buyer said. */
   text: string;
+  /** The decisive phrase inside the text, an exact substring, used by "Highlight the key words". Never says which barrier it points to. */
+  key: string;
   truth: BarrierId;
   /** One question that teaches how to test the note. Shown for every note at once, never only the wrong ones. */
   clue: string;
@@ -39,6 +41,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Contract sent",
     outcome: "delayed",
     text: "The contract went out on 3 March. The buyer wrote back twice: “We would like to be sure we can get out if the first six months go badly.” Then nothing for five weeks.",
+    key: "we can get out if the first six months go badly",
     truth: "fear",
     clue: "Is the buyer worried about what happens to them if it goes wrong, or about whether this vendor can be relied on?",
     why: "The worry is the buyer's own exposure (“get out if it goes badly”). Nothing questions the vendor's ability; the buyer wants the downside limited.",
@@ -51,6 +54,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Verbal yes",
     outcome: "dropped",
     text: "A verbal yes in the steering meeting. A week later the CIO wrote: “If we choose the wrong tool now, we own that mistake for three years. We would rather wait a quarter.”",
+    key: "we own that mistake for three years",
     truth: "fear",
     clue: "What is the CIO afraid of: the tool, the vendor, or owning a mistake?",
     why: "“We own that mistake for three years” is a fear of a costly wrong step. A verbal yes is undone by anticipated regret.",
@@ -63,6 +67,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Legal review",
     outcome: "delayed",
     text: "The buyer's team sent a 90-item security questionnaire for the second time and asked to interview our engineers again. “We still do not know how you work day to day.”",
+    key: "We still do not know how you work day to day",
     truth: "trust",
     clue: "Is the buyer asking for more proof about SecureIT's own people, or for evidence from other customers?",
     why: "“How you work day to day” and repeated interviews of the vendor's own engineers show a trust gap: the buyer is testing whether SecureIT's people can be relied on.",
@@ -75,6 +80,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Signature scheduled",
     outcome: "dropped",
     text: "Before the signing date the buyer asked for a call with the engineer who would lead the project. The call was cancelled twice on their side. Final message: “We never really got to know the people.”",
+    key: "We never really got to know the people",
     truth: "trust",
     clue: "Does the buyer doubt the outcome, or the people who would deliver it?",
     why: "“We never got to know the people” is about personal trust in those who will deliver. The buyer did not find a reason to depend on them.",
@@ -87,6 +93,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Proposal",
     outcome: "delayed",
     text: "The buyer asked: “Which companies like ours use you?” Our list had one name, a customer that did not want to be a reference. The buyer stopped replying.",
+    key: "Which companies like ours use you",
     truth: "proof",
     clue: "Whose experience is the buyer asking for: the vendor's people, or other customers like them?",
     why: "“Which companies like ours use you?” asks for the choice of comparable others. With no reference to name, the buyer has nothing to lean on.",
@@ -99,6 +106,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Verbal yes",
     outcome: "dropped",
     text: "The head of IT liked the offer but said: “My board will ask who else in our sector has done this. I cannot tell them.”",
+    key: "My board will ask who else in our sector has done this",
     truth: "proof",
     clue: "What would the head of IT need in order to say yes: a guarantee, a person to trust, or a peer who went first?",
     why: "The missing item is a peer in the same sector who went first. It is also what the head of IT would say to their own board.",
@@ -111,6 +119,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Contract sent",
     outcome: "delayed",
     text: "The buyer forwarded our 38-page master agreement with 60 comments and asked for the three service tiers to be combined into one simpler package. “It is too much to compare.”",
+    key: "It is too much to compare",
     truth: "overload",
     clue: "Is the buyer stuck on a fear or a doubt, or on the amount there is to weigh?",
     why: "The buyer says it outright: too many pages, too many tiers, too much to compare. The barrier is the load of the decision, not a worry.",
@@ -123,6 +132,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Proposal",
     outcome: "delayed",
     text: "We sent an offer with 14 options and a price sheet in five parts. The buyer wrote: “I cannot tell which one we need. Let us pick this up when I have time.”",
+    key: "I cannot tell which one we need",
     truth: "overload",
     clue: "Does anything in the reply say the buyer is afraid, or only that it cannot be worked out?",
     why: "“I cannot tell which one we need” is a buyer swamped by options. “When I have time” is the delay that follows.",
@@ -135,6 +145,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Verbal yes",
     outcome: "delayed",
     text: "“Our current setup works and nothing has gone wrong so far. We will revisit it in the next budget round.” No incident and no deadline on the buyer's side.",
+    key: "Our current setup works and nothing has gone wrong so far",
     truth: "inertia",
     clue: "Is there anything that forces the buyer to change now?",
     why: "Nothing has gone wrong and nothing is due, so doing nothing feels free. This is the status quo winning by default.",
@@ -147,6 +158,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Legal review",
     outcome: "dropped",
     text: "Three departments had to sign off. IT wanted the service. The finance director said: “I do not want my name on this.” Nobody was named as the owner of the decision.",
+    key: "I do not want my name on this",
     truth: "owner",
     clue: "Is the trouble the outcome itself, or who would carry the blame and the sign-off?",
     why: "“I do not want my name on this” and “nobody was named as the owner” are about accountability. Each person can say no and nobody wants to say yes.",
@@ -159,6 +171,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Verbal yes",
     outcome: "dropped",
     text: "The buyer's message: “What if the migration fails and we lose a weekend of data? We could not recover from that.” The deal was withdrawn two days later.",
+    key: "We could not recover from that",
     truth: "fear",
     clue: "Does the buyer doubt SecureIT's ability, or fear an outcome they could not undo?",
     why: "“We could not recover from that” is the fear of an irreversible loss. The buyer fears the outcome, not the vendor.",
@@ -171,6 +184,7 @@ export const EXIT_NOTES: ExitNote[] = [
     stage: "Signature scheduled",
     outcome: "dropped",
     text: "The buyer's project lead called: “Our last vendor promised the same things and did not deliver. I do not yet believe you will be different.”",
+    key: "I do not yet believe you will be different",
     truth: "trust",
     clue: "Is the doubt about this vendor's word, or about a downside the buyer could not survive?",
     why: "“I do not yet believe you will be different” is a doubt about the vendor's word, shaped by a previous bad experience. That is a trust gap.",

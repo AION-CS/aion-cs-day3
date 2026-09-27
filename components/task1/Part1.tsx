@@ -5,6 +5,7 @@ import { AnswerKey } from "@/components/ui/AnswerKey";
 import { CalcDiagnosis } from "@/components/ui/CalcDiagnosis";
 import { Field } from "@/components/ui/Field";
 import { FormulaBuilder } from "@/components/ui/FormulaBuilder";
+import { ExampleAnswer } from "@/components/ui/ExampleAnswer";
 import { CheckBar, Reading, TextBox } from "@/components/ui/Inputs";
 import { MaterialRefs } from "@/components/ui/MaterialRefs";
 import { MentorGuide } from "@/components/ui/MentorGuide";
@@ -59,6 +60,7 @@ export function Block11() {
         domId={IDS.reason}
         clues={Object.fromEntries(REASONS.map((r) => [r.id, r.clue]))}
         reasons={Object.fromEntries(REASONS.map((r) => [r.id, r.why]))}
+        keyPhrases={Object.fromEntries(REASONS.map((r) => [r.id, r.key]))}
         result={l1.sortResult}
         checks={l1.sortChecks}
         onCheck={() => patch((s) => ({ checks: s.checks + 1, sortChecks: s.sortChecks + 1, sortResult: sortHolds(s.sort) }))}
@@ -94,6 +96,7 @@ export function Block11() {
         min={MIN_LINE}
         rows={2}
       />
+      <ExampleAnswer id="extra-reason-example" guide={extraReasonGuide()} />
       {mentor && <MentorGuide guide={extraReasonGuide()} />}
       <p className="text-caption text-ash">
         Words in the statements, explained in plain language: <Gloss>breach, ISO/IEC 27001, time and material, onboarding.</Gloss>
@@ -254,6 +257,7 @@ export function Block12() {
           ]}
         />
       </TextBox>
+      <ExampleAnswer id="role-example" guide={roleGuide()} />
       {mentor && <MentorGuide guide={roleGuide()} />}
 
       <CheckBar onCheck={check} checkLabel="Check my figures and sentence" checks={l1.checks} />
@@ -331,6 +335,7 @@ export function Block13() {
                   {h.mech && <p className="mt-1 text-micro normal-case tracking-normal text-ash">Chosen: {HYP_LABEL[h.mech]}</p>}
                 </div>
               </TextBox>
+              <ExampleAnswer id={`hyp-${i}-example`} guide={hypGuide(i)} />
               {mentor && <MentorGuide guide={hypGuide(i)} />}
             </div>
           );
@@ -374,6 +379,7 @@ export function Block14() {
       {fields.map((f) => (
         <div key={f.k} className="space-y-1.5">
           <TextBox id={IDS.reflect(f.k)} label={f.label} help={f.help} value={l1.reflect[f.k]} onChange={(v) => patch((s) => ({ reflect: { ...s.reflect, [f.k]: v } }))} min={MIN_LINE} rows={3} />
+          <ExampleAnswer id={`reflect-${f.k}-example`} guide={reflectGuide(f.k)} />
           {mentor && <MentorGuide guide={reflectGuide(f.k)} />}
         </div>
       ))}
